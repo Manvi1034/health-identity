@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Health ID</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
+        <div class="login-card p-4 rounded shadow">
+            <h2 class="text-center mb-4">Health ID Login</h2>
+            <form id="login-form">
+                <div class="mb-3">
+                    <label for="login-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="login-email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="login-password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="login-role" class="form-label">Role</label>
+                    <select class="form-select" id="login-role" required>
+                        <option value="">Select Role</option>
+                        <option value="patient">Patient</option>
+                        <option value="family">Family Member</option>
+                        <option value="emergency">Emergency Responder</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="text-center mt-3">
+                <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="register-page" class="container-fluid d-flex justify-content-center align-items-center min-vh-100 d-none">
+        <div class="login-card p-4 rounded shadow">
+            <h2 class="text-center mb-4">Create Health ID</h2>
+            <form id="register-form">
+                <div class="mb-3">
+                    <label for="register-name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="register-name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="register-email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="register-password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="register-confirm-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app-container" class="container-fluid d-none">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="#">Health ID</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="nav-dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-health-card">Health Card</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-medical-history">Medical History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-settings">Settings</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <span class="navbar-text me-3" id="user-role-display"></span>
+                        <button class="btn btn-outline-light" id="logout-btn">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <!-- Dashboard View -->
+            <div id="dashboard-view">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <button class="btn btn-outline-primary w-100" id="quick-view-card">
+                                            <i class="fas fa-id-card me-2"></i>View Health Card
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <button class="btn btn-outline-primary w-100" id="quick-add-medication">
+                                            <i class="fas fa-pills me-2"></i>Add Medication
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <button class="btn btn-outline-primary w-100" id="quick-share-card">
+                                            <i class="fas fa-share-alt me-2"></i>Share Health Card
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Recent Activity</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group" id="recent-activity-list">
+                                    <!-- Filled by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Emergency Access</h5>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="mb-3" id="qr-code-container">
+                                    <!-- QR Code will be generated here -->
+                                </div>
+                                <p class="text-muted small">Scan this QR code to access emergency health information</p>
+                                <button class="btn btn-outline-danger w-100 mb-2" id="generate-qr-btn">
+                                    <i class="fas fa-qrcode me-2"></i>Generate QR Code
+                                </button>
+                                <button class="btn btn-outline-secondary w-100" id="download-pdf-btn">
+                                    <i class="fas fa-file-pdf me-2"></i>Download PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Health Summary</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-warning" id="allergies-alert">
+                                    <strong>Allergies:</strong> <span id="allergies-summary">None recorded</span>
+                                </div>
+                                <div class="alert alert-info">
+                                    <strong>Conditions:</strong> <span id="conditions-summary">None recorded</span>
+                                </div>
+                                <div class="alert alert-light">
+                                    <strong>Last Visit:</strong> <span id="last-visit-summary">No visits recorded</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Card View -->
+            <div id="health-card-view" class="d-none">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">Digital Health Card</h5>
+                                    <div>
+                                        <button class="btn btn-sm btn-light me-2" id="edit-health-card-btn">
+                                            <i class="fas fa-edit me-1"></i>Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-light" id="print-health-card-btn">
+                                            <i class="fas fa-print me-1"></i>Print
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="health-card" id="health-card-display">
+                                    <div class="health-card-header">
+                                        <h3>Health Identification Card</h3>
+                                        <div class="health-card-photo-placeholder">
+                                            <i class="fas fa-user-circle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="health-card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="health-card-field">
+                                                    <label>Full Name:</label>
+                                                    <span id="hc-name">Not provided</span>
+                                                </div>
+                                                <div class="health-card-field">
+                                                    <label>Date of Birth:</label>
+                                                    <span id="hc-dob">Not provided</span>
+                                                </div>
+                                                <div class="health-card-field">
+                                                    <label>Gender:</label>
+                                                    <span id="hc-gender">Not provided</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="health-card-field">
+                                                    <label>Blood Group:</label>
+                                                    <span id="hc-blood-group">Not provided</span>
+                                                </div>
+                                                <div class="health-card-field">
+                                                    <label>Allergies:</label>
+                                                    <span id="hc-allergies">None</span>
+                                                </div>
+                                                <div class="health-card-field">
+                                                    <label>Conditions:</label>
+                                                    <span id="hc-conditions">None</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="health-card-section">
+                                            <h5>Emergency Contact</h5>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="health-card-field">
+                                                        <label>Name:</label>
+                                                        <span id="hc-emergency-name">Not provided</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="health-card-field">
+                                                        <label>Phone:</label>
+                                                        <span id="hc-emergency-phone">Not provided</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="health-card-field">
+                                                        <label>Relationship:</label>
+                                                        <span id="hc-emergency-relation">Not provided</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="health-card-footer">
+                                            <small class="text-muted">This card is valid only with official ID</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Health Card View -->
+            <div id="edit-health-card-view" class="d-none">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">Edit Health Card</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form id="health-card-form">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="edit-name" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="edit-name">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="edit-dob" class="form-label">Date of Birth</label>
+                                            <input type="date" class="form-control" id="edit-dob">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="edit-gender" class="form-label">Gender</label>
+                                            <select class="form-select" id="edit-gender">
+                                                <option value="">Select</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                                <option value="Prefer not to say">Prefer not to say</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-3">
+                                            <label for="edit-blood-group" class="form-label">Blood Group</label>
+                                            <select class="form-select" id="edit-blood-group">
+                                                <option value="">Select</option>
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="O+">O+</option>
+                                                <option value="O-">O-</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label for="edit-allergies" class="form-label">Allergies (comma separated)</label>
+                                            <input type="text" class="form-control" id="edit-allergies" placeholder="e.g., Penicillin, Peanuts">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="edit-conditions" class="form-label">Medical Conditions (comma separated)</label>
+                                            <input type="text" class="form-control" id="edit-conditions" placeholder="e.g., Asthma, Diabetes">
+                                        </div>
+                                    </div>
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <h6 class="mb-0">Emergency Contact</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="edit-emergency-name" class="form-label">Name</label>
+                                                    <input type="text" class="form-control" id="edit-emergency-name">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="edit-emergency-phone" class="form-label">Phone</label>
+                                                    <input type="tel" class="form-control" id="edit-emergency-phone">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="edit-emergency-relation" class="form-label">Relationship</label>
+                                                    <input type="text" class="form-control" id="edit-emergency-relation" placeholder="e.g., Spouse, Parent">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-secondary me-2" id="cancel-edit-health-card">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical History View -->
+            <div id="medical-history-view" class="d-none">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Medical History</h5>
+                        <button class="btn btn-light btn-sm" id="add-visit-btn">
+                            <i class="fas fa-plus me-1"></i>Add Visit
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs mb-4" id="history-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="visits-tab" data-bs-toggle="tab" data-bs-target="#visits" type="button">Doctor Visits</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="medications-tab" data-bs-toggle="tab" data-bs-target="#medications" type="button">Medications</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tests-tab" data-bs-toggle="tab" data-bs-target="#tests" type="button">Test Results</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="history-tab-content">
+                            <div class="tab-pane fade show active" id="visits" role="tabpanel">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Doctor</th>
+                                                <th>Notes</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="visits-table-body">
+                                            <!-- Filled by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="medications" role="tabpanel">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Medication</th>
+                                                <th>Dosage</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="medications-table-body">
+                                            <!-- Filled by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tests" role="tabpanel">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Test Name</th>
+                                                <th>Date</th>
+                                                <th>File</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tests-table-body">
+                                            <!-- Filled by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button class="btn btn-primary mt-3" id="upload-test-btn">
+                                    <i class="fas fa-upload me-2"></i>Upload Test Results
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Visit Modal -->
+            <div class="modal fade" id="addVisitModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Doctor Visit</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="add-visit-form">
+                                <div class="mb-3">
+                                    <label for="visit-date" class="form-label">Date</label>
+                                    <input type="date" class="form-control" id="visit-date" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="visit-doctor" class="form-label">Doctor Name</label>
+                                    <input type="text" class="form-control" id="visit-doctor" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="visit-specialty" class="form-label">Specialty</label>
+                                    <input type="text" class="form-control" id="visit-specialty">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="visit-notes" class="form-label">Notes</label>
+                                    <textarea class="form-control" id="visit-notes" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="save-visit-btn">Save Visit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Medication Modal -->
+            <div class="modal fade" id="addMedicationModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Medication</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="add-medication-form">
+                                <div class="mb-3">
+                                    <label for="medication-name" class="form-label">Medication Name</label>
+                                    <input type="text" class="form-control" id="medication-name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="medication-dosage" class="form-label">Dosage</label>
+                                    <input type="text" class="form-control" id="medication-dosage" required placeholder="e.g., 500mg twice daily">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="medication-start-date" class="form-label">Start Date</label>
+                                        <input type="date" class="form-control" id="medication-start-date" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="medication-end-date" class="form-label">End Date (if applicable)</label>
+                                        <input type="date" class="form-control" id="medication-end-date">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="medication-purpose" class="form-label">Purpose</label>
+                                    <input type="text" class="form-control" id="medication-purpose">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="save-medication-btn">Save Medication</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Test Modal -->
+            <div class="modal fade" id="uploadTestModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Upload Test Results</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="upload-test-form">
+                                <div class="mb-3">
+                                    <label for="test-name" class="form-label">Test Name</label>
+                                    <input type="text" class="form-control" id="test-name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="test-date" class="form-label">Test Date</label>
+                                    <input type="date" class="form-control" id="test-date" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="test-file" class="form-label">Test File (PDF, JPG, PNG)</label>
+                                    <input type="file" class="form-control" id="test-file" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="test-notes" class="form-label">Notes</label>
+                                    <textarea class="form-control" id="test-notes" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="save-test-btn">Upload Test</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" class="d-none">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="card-title mb-0">Account Settings</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Account Information</h6>
+                                    <form id="account-info-form">
+                                        <div class="mb-3">
+                                            <label for="settings-email" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="settings-email" disabled>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="settings-name" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="settings-name">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Update Information</button>
+                                    </form>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Change Password</h6>
+                                    <form id="change-password-form">
+                                        <div class="mb-3">
+                                            <label for="current-password" class="form-label">Current Password</label>
+                                            <input type="password" class="form-control" id="current-password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="new-password" class="form-label">New Password</label>
+                                            <input type="password" class="form-control" id="new-password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirm-new-password" class="form-label">Confirm New Password</label>
+                                            <input type="password" class="form-control" id="confirm-new-password">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Change Password</button>
+                                    </form>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6 class="mb-3">Access Control</h6>
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Family Access</h6>
+                                            <p class="card-text text-muted small">Grant read-only access to family members</p>
+                                            <form id="add-family-form" class="mb-3">
+                                                <div class="input-group">
+                                                    <input type="email" class="form-control" placeholder="Family member's email" id="family-email">
+                                                    <button class="btn btn-outline-primary" type="submit">Add</button>
+                                                </div>
+                                            </form>
+                                            <div id="family-access-list">
+                                                <!-- Filled by JS -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-danger">
+                                    <h6>Danger Zone</h6>
+                                    <p class="small">These actions are irreversible. Proceed with caution.</p>
+                                    <button class="btn btn-outline-danger" id="delete-account-btn">Delete Account</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency View -->
+            <div id="emergency-view" class="d-none">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card emergency-card">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="card-title mb-0">Emergency Health Information</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-danger mb-4">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>Emergency Access Only</strong> - Limited information displayed
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="info-field mb-3">
+                                            <label>Blood Group:</label>
+                                            <span id="em-blood-group">Not provided</span>
+                                        </div>
+                                        <div class="info-field mb-3">
+                                            <label>Allergies:</label>
+                                            <span id="em-allergies">None</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="info-field mb-3">
+                                            <label>Medical Conditions:</label>
+                                            <span id="em-conditions">None</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="emergency-contact-card mt-4">
+                                    <h6>Emergency Contact</h6>
+                                    <div class="contact-info">
+                                        <div class="info-field">
+                                            <label>Name:</label>
+                                            <span id="em-contact-name">Not provided</span>
+                                        </div>
+                                        <div class="info-field">
+                                            <label>Phone:</label>
+                                            <span id="em-contact-phone">Not provided</span>
+                                        </div>
+                                        <div class="info-field">
+                                            <label>Relationship:</label>
+                                            <span id="em-contact-relation">Not provided</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <button class="btn btn-danger" id="em-call-contact">
+                                        <i class="fas fa-phone me-2"></i>Call Emergency Contact
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirm Account Deletion</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <p class="text-danger"><strong>Warning:</strong> All your health data will be permanently deleted.</p>
+                    <div class="mb-3">
+                        <label for="delete-confirm-email" class="form-label">To confirm, type your email address</label>
+                        <input type="email" class="form-control" id="delete-confirm-email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="delete-confirm-password" class="form-label">Enter your password</label>
+                        <input type="password" class="form-control" id="delete-confirm-password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete-account">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Share Health Card</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div id="modal-qr-code"></div>
+                    <p class="mt-3 small text-muted">Scan this QR code to access emergency health information</p>
+                    <div class="d-grid gap-2 mt-3">
+                        <button class="btn btn-outline-primary" id="download-qr-btn">
+                            <i class="fas fa-download me-2"></i>Download QR Code
+                        </button>
+                        <button class="btn btn-outline-secondary" id="share-link-btn">
+                            <i class="fas fa-share-alt me-2"></i>Copy Share Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+    <!-- ...your HTML content... -->
+
+<!-- Place these just before </body> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</body>
+</html>

@@ -1,0 +1,340 @@
+/* Base Styles */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --text-color: #333;
+    --text-light: #7f8c8d;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    background-color: #f5f7fa;
+    line-height: 1.6;
+}
+
+/* Login Page Styles */
+#login-page, #register-page {
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+}
+
+.login-card {
+    background-color: white;
+    width: 100%;
+    max-width: 400px;
+    border: none;
+}
+
+.login-card h2 {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Health Card Styles */
+.health-card {
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: var(--box-shadow);
+}
+
+.health-card-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.health-card-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.health-card-photo-placeholder {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background-color: var(--light-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+.health-card-body {
+    padding: 1.5rem;
+    background-color: white;
+}
+
+.health-card-field {
+    margin-bottom: 1rem;
+}
+
+.health-card-field label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.health-card-field span {
+    display: block;
+    padding: 0.5rem;
+    background-color: var(--light-color);
+    border-radius: 4px;
+}
+
+.health-card-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+.health-card-section h5 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.health-card-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+/* Emergency Card Styles */
+.emergency-card {
+    border: 2px solid var(--danger-color);
+}
+
+.info-field {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+.info-field label {
+    font-weight: 600;
+    color: var(--danger-color);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.info-field span {
+    display: block;
+}
+
+.emergency-contact-card {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.emergency-contact-card h6 {
+    color: var(--danger-color);
+    margin-bottom: 1rem;
+}
+
+/* Table Styles */
+.table {
+    background-color: white;
+}
+
+.table th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* QR Code Container */
+#qr-code-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    background-color: white;
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .health-card-photo-placeholder {
+        position: static;
+        margin: 0 auto 1rem;
+        transform: none;
+    }
+    
+    .health-card-header {
+        text-align: center;
+    }
+}
+
+/* Utility Classes */
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+/* Badges */
+.badge-health {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Activity List */
+.activity-item {
+    border-left: 3px solid var(--secondary-color);
+    transition: all 0.2s;
+}
+
+.activity-item:hover {
+    background-color: #f8f9fa;
+}
+
+.activity-date {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+/* Family Access List */
+.family-member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    margin-bottom: 0.5rem;
+}
+
+.family-member-email {
+    font-weight: 500;
+}
+
+/* Modal Tweaks */
+.modal-header {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Button Enhancements */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #1a252f;
+    border-color: #1a252f;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Navbar Active State */
+.nav-link.active {
+    font-weight: 600;
+    border-bottom: 2px solid white;
+}
+
+/* Form Control Focus */
+.form-control:focus, .form-select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+
+/* Alert Customization */
+.alert-warning {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    color: #856404;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+}
+
+/* Test File Links */
+.test-file-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.test-file-link:hover {
+    text-decoration: underline;
+}
+
+/* Print Styles */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #health-card-display, #health-card-display * {
+        visibility: visible;
+    }
+    #health-card-display {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+    }
+    .no-print {
+        display: none !important;
+    }
+}
